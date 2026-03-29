@@ -5,9 +5,9 @@ Online shop project using Django REST Framework and Angular
 
 ## 👥 Team Members
 
-* Student 1 (Backend)
-* Student 2 (Frontend)
-* Student 3 (Integration & Testing)
+* Уәлихан Шоқан 24B032094
+* Түркпен Адия 24B032076
+* Карамурзанов Арсен 24B031049
 
 Project Description
 
