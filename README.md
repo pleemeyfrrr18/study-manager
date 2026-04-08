@@ -7,6 +7,58 @@
 
 ## Description
 
+Study Manager is a web application designed to help students organize and manage their academic tasks efficiently.
+
+It allows users to create, edit, and track tasks, set deadlines, and categorize their work to improve productivity and avoid missing important assignments.
+
+⭐ Key Features\
+    - 🔐 User Authentication (JWT) — each user has a personal workspace\
+    - 📝 Task Management (CRUD) — create, update, delete, and view tasks\
+    - 📂 Categories — organize tasks by subjects or topics\
+    - 🔍 Search & Filtering — quickly find tasks by name or status\
+    - ⏱ Deadline Tracking — keep track of upcoming assignments\
+    - 📊 Progress Tracking — monitor completed vs pending tasks\
+
+You can add a Team Project feature where users can create a team with friends and work on shared academic projects together.
+
+### What users can do
+    - create a team
+    - invite friends to join
+    - create a group project inside the team
+    - assign tasks to team members
+    - track the progress of the whole group
+    - see who completed which task
+
+### Main idea
+
+There will be:
+    - personal tasks for one user
+    - team projects for several users
+
+So the app supports both individual study planning and group work.
+
+You can add these models:
+
+Team\
+    - name\
+    - description\
+    - creator\
+TeamMember\
+    - user\
+    - team\
+    - role\
+Project\
+    - title\
+    - description\
+    - deadline\
+    - team\
+ProjectTask\
+    - title\
+    - status\
+    - assigned_user\
+    - project\
+    
+
 ### 🧭 1. Application Structure (Routing)
 
 The application uses Angular routing with the following pages:
