@@ -9,19 +9,41 @@
 
   @if (task) {
     @if (!isEditing) {
+      <a routerLink="/tasks" class="back-link">← Back to Tasks</a>
       <h1>{{ task.title }}</h1>
-      <p>{{ task.description }}</p>
-      <p>Due: {{ task.due_date }}</p>
-      <button (click)="isEditing = true">Edit</button>
-      <button (click)="deleteTask()" class="delete-btn">Delete</button>
-      <a routerLink="/tasks">← Back to Tasks</a>
+      <p class="description">{{ task.description }}</p>
+      <p class="deadline">📅 Deadline: {{ task.deadline || 'No deadline' }}</p>
+      <p class="priority">⭐ Priority: {{ task.priority ? 'High' : 'Normal' }}</p>
+
+      <div class="status-bar">
+        @for (s of statusChoices; track s.value) {
+          <button
+            (click)="changeStatus(s.value)"
+            [class.active]="task.status === s.value"
+            class="status-btn">
+            {{ s.label }}
+          </button>
+        }
+      </div>
+
+      <div class="actions">
+        <button (click)="isEditing = true" class="edit-btn">Edit</button>
+        <button (click)="deleteTask()" class="delete-btn">Delete</button>
+      </div>
     } @else {
       <h1>Edit Task</h1>
       <input [(ngModel)]="editTask.title" placeholder="Title" />
       <input [(ngModel)]="editTask.description" placeholder="Description" />
-      <input [(ngModel)]="editTask.due_date" type="date" />
-      <button (click)="saveTask()">Save</button>
-      <button (click)="isEditing = false">Cancel</button>
+      <input [(ngModel)]="editTask.deadline" type="date" />
+      <select [(ngModel)]="editTask.status">
+        @for (s of statusChoices; track s.value) {
+          <option [value]="s.value">{{ s.label }}</option>
+        }
+      </select>
+      <div class="actions">
+        <button (click)="saveTask()" class="edit-btn">Save</button>
+        <button (click)="isEditing = false">Cancel</button>
+      </div>
     }
   }
 </div>

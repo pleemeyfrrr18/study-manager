@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -16,12 +16,19 @@ export class TaskDetail implements OnInit {
   isLoading = false;
   isEditing = false;
 
-  editTask = { title: '', description: '', due_date: '' };
+  statusChoices = [
+    { value: 'todo', label: 'To Do' },
+    { value: 'doing', label: 'In Progress' },
+    { value: 'done', label: 'Done' },
+  ];
+
+  editTask = { title: '', description: '', deadline: '', status: 'todo', priority: false };
 
   constructor(
     private taskService: TaskService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -34,12 +41,20 @@ export class TaskDetail implements OnInit {
     this.taskService.getTask(id).subscribe({
       next: (data) => {
         this.task = data;
-        this.editTask = { title: data.title, description: data.description, due_date: data.due_date };
+        this.editTask = {
+          title: data.title,
+          description: data.description,
+          deadline: data.deadline,
+          status: data.status,
+          priority: data.priority
+        };
         this.isLoading = false;
+        this.cdr.detectChanges();
       },
       error: () => {
         this.errorMessage = 'Failed to load task';
         this.isLoading = false;
+        this.cdr.detectChanges();
       }
     });
   }
@@ -49,8 +64,19 @@ export class TaskDetail implements OnInit {
       next: (data) => {
         this.task = data;
         this.isEditing = false;
+        this.cdr.detectChanges();
       },
       error: () => { this.errorMessage = 'Failed to update task'; }
+    });
+  }
+
+  changeStatus(status: string) {
+    this.taskService.updateTask(this.task.id, { status }).subscribe({
+      next: (data) => {
+        this.task = data;
+        this.cdr.detectChanges();
+      },
+      error: () => { this.errorMessage = 'Failed to update status'; }
     });
   }
 

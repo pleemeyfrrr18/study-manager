@@ -18,9 +18,9 @@ export class TaskList implements OnInit {
   newTask = {
     title: '',
     description: '',
-    due_date: '',
+    deadline: '',
     category: null
-  };
+};
 
   constructor(private taskService: TaskService) {}
 
@@ -47,7 +47,7 @@ export class TaskList implements OnInit {
     this.taskService.createTask(this.newTask).subscribe({
       next: () => {
         this.loadTasks();
-        this.newTask = { title: '', description: '', due_date: '', category: null };
+        this.newTask = { title: '', description: '', deadline: '', category: null };
       },
       error: () => {
         this.errorMessage = 'Failed to create task';
